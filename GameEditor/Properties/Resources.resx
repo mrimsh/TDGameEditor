@@ -121,4 +121,16 @@
   <data name="Island_TD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Island_TD.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Selection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Selection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Spawner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Spawner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TowerPad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TowerPad.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WayPoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WayPoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

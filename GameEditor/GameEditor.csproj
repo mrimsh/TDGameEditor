@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentInfoClasses\MapInfo.cs" />
     <Compile Include="Form_mapEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,8 +74,12 @@
     <Compile Include="Form_selectAction.Designer.cs">
       <DependentUpon>Form_selectAction.cs</DependentUpon>
     </Compile>
+    <Compile Include="MyControls\WaypointBeacon.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XMLManager.cs" />
     <EmbeddedResource Include="Form_mapEdit.resx">
       <DependentUpon>Form_mapEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -128,6 +133,18 @@
       <ProductName>Установщик Windows 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TowerPad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WayPoint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Selection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spawner.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
