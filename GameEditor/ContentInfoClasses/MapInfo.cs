@@ -95,8 +95,20 @@ namespace GameEditor.ContentInfoClasses
         [Description("Название путя.")]
         public string Name
         {
-            get { return name; }
-            set { name = value; }
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                if (form_mapEdit.Instance != null)
+                {
+                    int lastSelectedIndex = form_mapEdit.Instance.combobox_SelectedWay.SelectedIndex;
+                    form_mapEdit.Instance.RefreshSelectedWayCombobox();
+                    form_mapEdit.Instance.combobox_SelectedWay.SelectedIndex = lastSelectedIndex;
+                }
+            }
         }
 
         public List<WayPoint> waypoints = new List<WayPoint>();
@@ -106,8 +118,14 @@ namespace GameEditor.ContentInfoClasses
         [Description("Координаты ключевых точек данного маршрута.")]
         public List<WayPoint> Waypoints
         {
-            get { return waypoints; }
-            set { waypoints = value; }
+            get
+            {
+                return waypoints;
+            }
+            set
+            {
+                waypoints = value;
+            }
         }
 
         public Way() { }
@@ -121,8 +139,18 @@ namespace GameEditor.ContentInfoClasses
         [Description("Координата точки на карте.")]
         public Point Position
         {
-            get { return position; }
-            set { position = value; }
+            get
+            {
+                return position;
+            }
+            set
+            {
+                if (position != value)
+                {
+                    position = value;
+                    form_mapEdit.Instance.SetWaypointPosition(this, position);
+                }
+            }
         }
 
         public WayPoint() { }
@@ -217,6 +245,9 @@ namespace GameEditor.ContentInfoClasses
         public TowerPad() { }
     }
 
+    /// <summary>
+    /// Конвертор типов, который позволяет задавать путь для каждого моба в спавнере, выбирая нужный путь из списка существующих путей.
+    /// </summary>
     public class WayTypeConverter : StringConverter
     {
         // <summary>

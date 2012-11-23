@@ -8,9 +8,21 @@ using System.Windows.Forms;
 
 namespace GameEditor.MyControls
 {
-    class WaypointBeacon : PictureBox
+    public class WaypointBeacon : PictureBox
     {
-        public WayPoint WaypointLink { get; set; }
+        private WayPoint waypointLink;
+        public WayPoint WaypointLink
+        {
+            get
+            {
+                return this.waypointLink;
+            }
+            set
+            {
+                this.waypointLink = value;
+                this.Location = value.Position;
+            }
+        }
         public int waypointIndex;
 
         public WaypointBeacon()
@@ -22,6 +34,12 @@ namespace GameEditor.MyControls
             this.Cursor = Cursors.Hand;
             this.WaypointLink = new WayPoint();
             this.Paint += WaypointBeacon_Paint;
+            this.LocationChanged += WaypointBeacon_LocationChanged;
+        }
+
+        void WaypointBeacon_LocationChanged(object sender, EventArgs e)
+        {
+            form_mapEdit.Instance.SetWaypointPosition(this, Location);
         }
 
         void WaypointBeacon_Paint(object sender, PaintEventArgs e)

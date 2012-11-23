@@ -26,6 +26,7 @@ namespace GameEditor
         MapInfo currentMap = new MapInfo();
         private Control selectedObject;
         private List<WaypointBeacon> waypointBeacons = new List<WaypointBeacon>();
+        private int selectedWay;
 
         public form_mapEdit()
         {
@@ -43,13 +44,11 @@ namespace GameEditor
 
             XMLManager.Instance.SetStoragePath("C:\\Users\\Murad\\Desktop\\temp\\");
             selectedObject = this;
+
+            RefreshSelectedWayCombobox();
+            combobox_SelectedWay.SelectedIndex = selectedWay;
+
             propGrid_properties.SelectedObject = currentMap;
-            combobox_SelectedWay.Items.Clear();
-            for (int i = 0; i < currentMap.Ways.Count; i++)
-            {
-                combobox_SelectedWay.Items.Add(currentMap.Ways[i].name);
-            }
-            combobox_SelectedWay.SelectedIndex = 0;
         }
 
         private void splitContainer1_Panel1_Scroll(object sender, ScrollEventArgs e)
@@ -65,7 +64,6 @@ namespace GameEditor
 
         private void DrawMiniMapVeiwZone()
         {
-            propGrid_properties.SelectedObject = pctBox_MiniMap;
             Pen pen_miniMap = new Pen(Color.Red);
             Brush brush = new SolidBrush(Color.Yellow);
             int imageSize = Math.Min(pctBox_MiniMap.Width, pctBox_MiniMap.Height);
@@ -147,8 +145,6 @@ namespace GameEditor
                 splitContainer_panel.Panel1.PerformLayout(); // removes trembling of scroll bar
                 pctBox_mapImage.Refresh(); // removes trembling of image
 
-                System.Diagnostics.Trace.WriteLine((double)mouseOffset.Y * (double)pctBox_mapImage.Image.Height / (double)imageSize);
-
                 this.dragStart = e.Location;
 
                 DrawMiniMapVeiwZone();
@@ -202,8 +198,12 @@ namespace GameEditor
             wb.Size = new Size(64, 64);
             wb.Move += wb_Move;
             wb.MouseDown += wb_MouseDown;
-            currentMap.Ways[0].waypoints.Add(wb.WaypointLink);
-            wb.waypointIndex = currentMap.Ways[0].Waypoints.Count;
+            wb.Location = new Point(
+                splitContainer_panel.Panel1.HorizontalScroll.Value + (int)(splitContainer_panel.Panel1.Width * 0.5f),
+                splitContainer_panel.Panel1.VerticalScroll.Value + (int)(splitContainer_panel.Panel1.Height * 0.5f)
+            );
+            currentMap.Ways[combobox_SelectedWay.SelectedIndex].waypoints.Add(wb.WaypointLink);
+            wb.waypointIndex = currentMap.Ways[combobox_SelectedWay.SelectedIndex].Waypoints.Count;
             propGrid_properties.SelectedObject = wb.WaypointLink;
             ControlMover.Init(wb, ControlMover.Direction.Any);
             DrawMiniMapVeiwZone();
@@ -213,8 +213,8 @@ namespace GameEditor
 
         void wb_Move(object sender, EventArgs e)
         {
-            WaypointBeacon senderBeacon = sender as WaypointBeacon;
-            senderBeacon.WaypointLink.Position = new Point(senderBeacon.Right, senderBeacon.Bottom);
+            //WaypointBeacon senderBeacon = sender as WaypointBeacon;
+            //senderBeacon.WaypointLink.Position = new Point(senderBeacon.Right, senderBeacon.Bottom);
             DrawMiniMapVeiwZone();
             propGrid_properties.Refresh();
             pctBox_mapImage.Refresh();
@@ -225,6 +225,117 @@ namespace GameEditor
             propGrid_properties.SelectedObject = (sender as WaypointBeacon).WaypointLink;
         }
 
+        private void combobox_SelectedWay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Way selectedWay = currentMap.Ways.Find(
+                delegate(Way way)
+                {
+                    return way.name == ((ToolStripComboBox)sender).Text;
+                }
+            );
+
+            RefreshWaypointBeacons();
+
+            propGrid_properties.SelectedObject = selectedWay;
+        }
+
+        void RefreshWaypointBeacons()
+        {
+            for (int i = 0; i < waypointBeacons.Count; i++)
+            {
+                pctBox_mapImage.Controls.Remove(waypointBeacons[i]);
+            }
+            waypointBeacons.Clear();
+
+            for (int i = 0; i < currentMap.Ways[combobox_SelectedWay.SelectedIndex].waypoints.Count; i++)
+            {
+                WaypointBeacon wb = new WaypointBeacon();
+                waypointBeacons.Add(wb);
+                this.pctBox_mapImage.Controls.Add(wb);
+                wb.WaypointLink = currentMap.Ways[combobox_SelectedWay.SelectedIndex].waypoints[i];
+                wb.Size = new Size(64, 64);
+                wb.Move += wb_Move;
+                wb.MouseDown += wb_MouseDown;
+                wb.waypointIndex = i;
+                ControlMover.Init(wb, ControlMover.Direction.Any);
+                wb.Refresh();
+            }
+            DrawMiniMapVeiwZone();
+            pctBox_mapImage.Refresh();
+        }
+
+        public void SetWaypointPosition(WaypointBeacon wb, Point wpLocation)
+        {
+            wb.Location = wpLocation;
+            wb.WaypointLink.Position = wpLocation;
+        }
+
+        public void SetWaypointPosition(WayPoint wp, Point wpLocation)
+        {
+            WaypointBeacon linkedWB;
+            linkedWB = waypointBeacons.Find(
+                 delegate(WaypointBeacon wb)
+                 {
+                     return wb.WaypointLink == wp;
+                 });
+            if (linkedWB != null)
+            {
+                SetWaypointPosition(linkedWB, wpLocation);
+            }
+        }
+
+        private void btn_addWay_Click(object sender, EventArgs e)
+        {
+            AddWay();
+        }
+
+        private void btn_removeWay_Click(object sender, EventArgs e)
+        {
+            RemoveWay();
+        }
+
+        void AddWay()
+        {
+            Way newWay = new Way();
+            newWay.name = "New Way " + new Random().Next(1000, 9999).ToString();
+            currentMap.Ways.Add(newWay);
+            RefreshSelectedWayCombobox();
+            combobox_SelectedWay.SelectedIndex = combobox_SelectedWay.Items.Count - 1;
+        }
+
+        void RemoveWay()
+        {
+            if (currentMap.Ways.Count > 1)
+            {
+                int lastSelectedIndex = combobox_SelectedWay.SelectedIndex;
+                currentMap.Ways.RemoveAt(lastSelectedIndex);
+                RefreshSelectedWayCombobox();
+                if (lastSelectedIndex < currentMap.Ways.Count)
+                {
+                    combobox_SelectedWay.SelectedIndex = lastSelectedIndex;
+                }
+                else
+                {
+                    combobox_SelectedWay.SelectedIndex = lastSelectedIndex - 1;
+                }
+            }
+        }
+
+        private void combobox_SelectedWay_Click(object sender, EventArgs e)
+        {
+            int lastSelectedIndex = combobox_SelectedWay.SelectedIndex;
+            RefreshSelectedWayCombobox();
+            combobox_SelectedWay.SelectedIndex = lastSelectedIndex;
+        }
+
+        public void RefreshSelectedWayCombobox()
+        {
+            combobox_SelectedWay.Items.Clear();
+            for (int i = 0; i < currentMap.Ways.Count; i++)
+            {
+                combobox_SelectedWay.Items.Add(currentMap.Ways[i].name);
+            }
+        }
 
         private void pctBox_mapImage_MouseDown(object sender, MouseEventArgs e)
         {

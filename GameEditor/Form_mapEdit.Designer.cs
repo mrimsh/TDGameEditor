@@ -39,6 +39,8 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer_panel = new System.Windows.Forms.SplitContainer();
             this.pctBox_mapImage = new System.Windows.Forms.PictureBox();
+            this.splitContainer_toolBar = new System.Windows.Forms.SplitContainer();
+            this.pctBox_MiniMap = new System.Windows.Forms.PictureBox();
             this.propGrid_properties = new System.Windows.Forms.PropertyGrid();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.создатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,24 +71,24 @@
             this.toolstrip_btn_addSpawner = new System.Windows.Forms.ToolStripButton();
             this.toolstrip_btn_addTowerPad = new System.Windows.Forms.ToolStripButton();
             this.toolstrip_btn_addWayPoint = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.combobox_SelectedWay = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.pctBox_MiniMap = new System.Windows.Forms.PictureBox();
-            this.splitContainer_toolBar = new System.Windows.Forms.SplitContainer();
+            this.btn_addWay = new System.Windows.Forms.ToolStripButton();
+            this.btn_removeWay = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_panel)).BeginInit();
             this.splitContainer_panel.Panel1.SuspendLayout();
             this.splitContainer_panel.Panel2.SuspendLayout();
             this.splitContainer_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctBox_mapImage)).BeginInit();
-            this.menuStrip1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pctBox_MiniMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_toolBar)).BeginInit();
             this.splitContainer_toolBar.Panel1.SuspendLayout();
             this.splitContainer_toolBar.Panel2.SuspendLayout();
             this.splitContainer_toolBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBox_MiniMap)).BeginInit();
+            this.menuStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileToolStripMenuItem
@@ -145,6 +147,7 @@
             // splitContainer_panel.Panel1
             // 
             this.splitContainer_panel.Panel1.AutoScroll = true;
+            this.splitContainer_panel.Panel1.BackColor = System.Drawing.Color.Black;
             this.splitContainer_panel.Panel1.Controls.Add(this.pctBox_mapImage);
             this.splitContainer_panel.Panel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.splitContainer1_Panel1_Scroll);
             // 
@@ -160,13 +163,48 @@
             // pctBox_mapImage
             // 
             this.pctBox_mapImage.Image = global::GameEditor.Properties.Resources.Island_TD;
-            this.pctBox_mapImage.Location = new System.Drawing.Point(-97, 34);
+            this.pctBox_mapImage.Location = new System.Drawing.Point(0, 0);
             this.pctBox_mapImage.Name = "pctBox_mapImage";
             this.pctBox_mapImage.Size = new System.Drawing.Size(1280, 1301);
             this.pctBox_mapImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pctBox_mapImage.TabIndex = 2;
             this.pctBox_mapImage.TabStop = false;
             this.pctBox_mapImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pctBox_mapImage_MouseDown);
+            // 
+            // splitContainer_toolBar
+            // 
+            this.splitContainer_toolBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer_toolBar.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer_toolBar.Name = "splitContainer_toolBar";
+            this.splitContainer_toolBar.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer_toolBar.Panel1
+            // 
+            this.splitContainer_toolBar.Panel1.Controls.Add(this.pctBox_MiniMap);
+            // 
+            // splitContainer_toolBar.Panel2
+            // 
+            this.splitContainer_toolBar.Panel2.Controls.Add(this.propGrid_properties);
+            this.splitContainer_toolBar.Size = new System.Drawing.Size(212, 521);
+            this.splitContainer_toolBar.SplitterDistance = 182;
+            this.splitContainer_toolBar.TabIndex = 6;
+            // 
+            // pctBox_MiniMap
+            // 
+            this.pctBox_MiniMap.BackColor = System.Drawing.Color.Black;
+            this.pctBox_MiniMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pctBox_MiniMap.Cursor = System.Windows.Forms.Cursors.NoMove2D;
+            this.pctBox_MiniMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pctBox_MiniMap.Image = global::GameEditor.Properties.Resources.Island_TD;
+            this.pctBox_MiniMap.Location = new System.Drawing.Point(0, 0);
+            this.pctBox_MiniMap.Name = "pctBox_MiniMap";
+            this.pctBox_MiniMap.Size = new System.Drawing.Size(212, 182);
+            this.pctBox_MiniMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pctBox_MiniMap.TabIndex = 4;
+            this.pctBox_MiniMap.TabStop = false;
+            this.pctBox_MiniMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pctBox_MiniMap_MouseDown);
+            this.pctBox_MiniMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pctBox_MiniMap_MouseMove);
+            this.pctBox_MiniMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pctBox_MiniMap_MouseUp);
             // 
             // propGrid_properties
             // 
@@ -357,9 +395,11 @@
             this.toolstrip_btn_addSpawner,
             this.toolstrip_btn_addTowerPad,
             this.toolstrip_btn_addWayPoint,
+            this.toolStripSeparator4,
             this.toolStripLabel1,
             this.combobox_SelectedWay,
-            this.toolStripSeparator4});
+            this.btn_addWay,
+            this.btn_removeWay});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(5, 0, 1, 0);
@@ -429,6 +469,11 @@
             this.toolstrip_btn_addWayPoint.Text = "Добавить Вейпоинт";
             this.toolstrip_btn_addWayPoint.Click += new System.EventHandler(this.toolstrip_btn_addWayPoint_Click);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
@@ -441,46 +486,28 @@
             this.combobox_SelectedWay.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.combobox_SelectedWay.Name = "combobox_SelectedWay";
             this.combobox_SelectedWay.Size = new System.Drawing.Size(121, 25);
+            this.combobox_SelectedWay.SelectedIndexChanged += new System.EventHandler(this.combobox_SelectedWay_SelectedIndexChanged);
+            this.combobox_SelectedWay.Click += new System.EventHandler(this.combobox_SelectedWay_Click);
             // 
-            // toolStripSeparator4
+            // btn_addWay
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            this.btn_addWay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_addWay.Image = global::GameEditor.Properties.Resources.add;
+            this.btn_addWay.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_addWay.Name = "btn_addWay";
+            this.btn_addWay.Size = new System.Drawing.Size(23, 22);
+            this.btn_addWay.Text = "toolStripButton1";
+            this.btn_addWay.Click += new System.EventHandler(this.btn_addWay_Click);
             // 
-            // pctBox_MiniMap
+            // btn_removeWay
             // 
-            this.pctBox_MiniMap.BackColor = System.Drawing.Color.Black;
-            this.pctBox_MiniMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pctBox_MiniMap.Cursor = System.Windows.Forms.Cursors.NoMove2D;
-            this.pctBox_MiniMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pctBox_MiniMap.Image = global::GameEditor.Properties.Resources.Island_TD;
-            this.pctBox_MiniMap.Location = new System.Drawing.Point(0, 0);
-            this.pctBox_MiniMap.Name = "pctBox_MiniMap";
-            this.pctBox_MiniMap.Size = new System.Drawing.Size(212, 182);
-            this.pctBox_MiniMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pctBox_MiniMap.TabIndex = 4;
-            this.pctBox_MiniMap.TabStop = false;
-            this.pctBox_MiniMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pctBox_MiniMap_MouseDown);
-            this.pctBox_MiniMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pctBox_MiniMap_MouseMove);
-            this.pctBox_MiniMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pctBox_MiniMap_MouseUp);
-            // 
-            // splitContainer_toolBar
-            // 
-            this.splitContainer_toolBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer_toolBar.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer_toolBar.Name = "splitContainer_toolBar";
-            this.splitContainer_toolBar.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer_toolBar.Panel1
-            // 
-            this.splitContainer_toolBar.Panel1.Controls.Add(this.pctBox_MiniMap);
-            // 
-            // splitContainer_toolBar.Panel2
-            // 
-            this.splitContainer_toolBar.Panel2.Controls.Add(this.propGrid_properties);
-            this.splitContainer_toolBar.Size = new System.Drawing.Size(212, 521);
-            this.splitContainer_toolBar.SplitterDistance = 182;
-            this.splitContainer_toolBar.TabIndex = 6;
+            this.btn_removeWay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_removeWay.Image = global::GameEditor.Properties.Resources.remove;
+            this.btn_removeWay.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_removeWay.Name = "btn_removeWay";
+            this.btn_removeWay.Size = new System.Drawing.Size(23, 22);
+            this.btn_removeWay.Text = "toolStripButton2";
+            this.btn_removeWay.Click += new System.EventHandler(this.btn_removeWay_Click);
             // 
             // form_mapEdit
             // 
@@ -491,7 +518,7 @@
             this.Controls.Add(this.panel1);
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "form_mapEdit";
-            this.Text = "Form_mapEdit";
+            this.Text = "Редактор Карт";
             this.Resize += new System.EventHandler(this.form_mapEdit_Resize);
             this.splitContainer_panel.Panel1.ResumeLayout(false);
             this.splitContainer_panel.Panel1.PerformLayout();
@@ -499,17 +526,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_panel)).EndInit();
             this.splitContainer_panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pctBox_mapImage)).EndInit();
+            this.splitContainer_toolBar.Panel1.ResumeLayout(false);
+            this.splitContainer_toolBar.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer_toolBar)).EndInit();
+            this.splitContainer_toolBar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pctBox_MiniMap)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pctBox_MiniMap)).EndInit();
-            this.splitContainer_toolBar.Panel1.ResumeLayout(false);
-            this.splitContainer_toolBar.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer_toolBar)).EndInit();
-            this.splitContainer_toolBar.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -551,7 +578,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripComboBox combobox_SelectedWay;
         private System.Windows.Forms.ToolStripButton создатьToolStripButton;
         private System.Windows.Forms.ToolStripButton открытьToolStripButton;
         private System.Windows.Forms.ToolStripButton сохранитьToolStripButton;
@@ -562,5 +588,8 @@
         private System.Windows.Forms.ToolStripButton toolstrip_btn_addWayPoint;
         private System.Windows.Forms.SplitContainer splitContainer_toolBar;
         private System.Windows.Forms.PictureBox pctBox_MiniMap;
+        private System.Windows.Forms.ToolStripButton btn_addWay;
+        private System.Windows.Forms.ToolStripButton btn_removeWay;
+        public System.Windows.Forms.ToolStripComboBox combobox_SelectedWay;
     }
 }
